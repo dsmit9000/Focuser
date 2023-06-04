@@ -1,0 +1,149 @@
+XH
+H 4 areas A global symbols
+M main.c
+S __r1 Ref0000
+S __rX Ref0000
+A text size F8 flags 0
+dbfile ./main.c
+dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+dbfunc e main 0 fV
+dbsym l g 4 I
+dbsym l f 2 I
+dbsym l bstep 0 I
+dbline FFFFFFFF 0
+dbline 11 4
+dbline 17 4
+dbline 18 A
+dbline 19 10
+dbline 1A 16
+dbline 1C 18
+dbline 1D 21
+dbline 1E 35
+dbline 1E 35
+dbline 1F 37
+dbline 20 37
+dbline 21 3F
+dbline 22 4F
+dbline 22 4F
+dbline 23 54
+dbline 24 5E
+dbline 24 5E
+dbline 25 64
+dbline 26 66
+dbline 27 66
+dbline 28 66
+dbline FFFFFFFE 68
+dbline 0 6B
+dbfunc e Step 6D fV
+dbsym l dir 0 I
+dbline FFFFFFFF 6D
+dbline 2B 71
+dbline 2C 71
+dbline 2D 7A
+dbline 2E 84
+dbline 2E 84
+dbline 2F 89
+dbline 2F 99
+dbline 30 9F
+dbline 30 A1
+dbline 31 A1
+dbline 32 A6
+dbline 32 B2
+dbline 33 B8
+dbline 34 B8
+dbline 35 BE
+dbline 36 C4
+dbline FFFFFFFE C6
+dbline 0 C9
+dbfunc e SetOutput CA fV
+dbsym l value 0 I
+dbline FFFFFFFF CA
+dbline 44 CE
+dbline 45 CE
+dbline 46 D4
+dbline 47 DE
+dbline 47 DE
+dbline 48 EE
+dbline 49 EE
+dbline FFFFFFFE F4
+dbline 0 F7
+S _main Def0000
+S _SetOutput Def00CA
+S _Step Def006D
+A data size 10 flags 20
+dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+dbsym e stepdata 0 A[16:8]I
+S _stepdata Def0000
+A idata size 10 flags 1
+A bss size 8 flags 20
+dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+dbsym e lstep 0 I
+dbsym e delay 2 I
+dbsym e enable 4 I
+dbsym e pos 6 I
+S _delay Def0002
+S _lstep Def0000
+S _pos Def0006
+S _enable Def0004
+T 00 00 10 4F 38 06 55 00 07 00 55 00 06 00 55
+R 00 00 00 00 01 07 00 03 01 0B 00 03
+T 00 0B 00 05 00 55 00 04 00 55 00 03 00 55
+R 00 00 00 00 01 02 00 03 01 06 00 03 01 0A 00 03
+T 00 14 00 02 00 90 B2 5D 04 21 01 54 01 56 00 00
+R 00 00 00 00 01 02 00 03
+T 00 21 3C 00 00 00 B0 12 3C 00 01 00 B0 0D 3D 00
+R 00 00 00 00 01 03 00 03 01 09 00 03
+T 00 2D 00 B0 08 3D 01 01 B0 03 90 36 52 01 53
+R 00 00 00 00
+T 00 3A 00 01 52 00 53 00 00 50 00 12 00 03 51
+R 00 00 00 00 01 02 00 03 01 07 00 03 01 0C 00 03
+T 00 44 00 02 31 80 53 00 00 50 80 1A 00 00 DF CA
+R 00 00 00 00 01 02 00 03 03 07 00 01 03 0C 00 01
+T 00 4F 7A 00 03 1E 00 02 00 3C 00 02 00 BF C0 3C
+R 00 00 00 00 01 03 00 03 01 06 00 03 01 0A 00 03
+T 00 5A 00 03 00 BF BB 55 00 05 00 55 00 04 00 90
+R 00 00 00 00 01 02 00 03 01 08 00 03 01 0C 00 03
+T 00 65 64 8F B1 38 FA 20 8F FF 10 4F 38 02 5D 04
+R 00 00 00 00
+T 00 73 21 02 54 01 56 00 00 3D 00 00 B0 23 3D 01
+R 00 00 00 00
+T 00 81 00 B0 1E 76 00 07 0E 00 06 00 50 07 12
+R 00 00 00 00 01 06 00 03 01 09 00 03
+T 00 8C 00 07 51 00 06 31 80 53 00 00 50 80 1A
+R 00 00 00 00 01 02 00 03 01 05 00 03 03 0A 00 01
+T 00 96 00 00 D0 20 55 00 07 00 55 00 06 00 80 18
+R 00 00 00 00 03 02 00 01 01 07 00 03 01 0B 00 03
+T 00 A1 7A 00 07 1E 00 06 00 51 00 07 11 00 51
+R 00 00 00 00 01 03 00 03 01 06 00 03 01 0A 00 03
+T 00 AB 00 06 31 80 19 80 D0 07 55 00 07 07 55
+R 00 00 00 00 01 02 00 03 01 0B 00 03
+T 00 B6 00 06 00 55 00 05 01 55 00 04 00 55
+R 00 00 00 00 01 02 00 03 01 06 00 03 01 0A 00 03
+T 00 BF 00 03 00 55 00 02 7D 90 04 38 FE 20 7F
+R 00 00 00 00 01 02 00 03 01 06 00 03
+T 00 00 00 0A
+R 00 00 00 02
+T 00 02 00 08
+R 00 00 00 02
+T 00 04 00 09
+R 00 00 00 02
+T 00 06 00 01
+R 00 00 00 02
+T 00 08 00 05
+R 00 00 00 02
+T 00 0A 00 04
+R 00 00 00 02
+T 00 0C 00 06
+R 00 00 00 02
+T 00 0E 00 02
+R 00 00 00 02
+T 00 CA 10 4F 38 02 56 01 00 56 00 00 3C 00 04 00
+R 00 00 00 00 01 0D 00 03
+T 00 D7 B0 06 3C 00 05 00 A0 11 5F 00 00 00 07 65
+R 00 00 00 00 01 05 00 03 03 0B 00 00 01 0D 00 03
+T 00 E2 00 00 06 00 00 00 00 3E
+R 00 00 00 00 03 02 00 00 03 05 00 00 01 07 00 01
+T 00 E7 00 00 54 00 3E 00 00 54 01 52 01 64 64 60
+R 00 00 00 00 03 02 00 00 03 07 00 00
+T 00 F3 00 38 FE 20 7F
+R 00 00 00 00

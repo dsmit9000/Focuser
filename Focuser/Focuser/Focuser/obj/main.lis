@@ -1,0 +1,340 @@
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000                   .dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+ 0000                   .dbfunc e main _main fV
+ 0000           ;              g -> X+4
+ 0000           ;              f -> X+2
+ 0000           ;          bstep -> X+0
+ 0000           _main::
+ 0000                   .dbline -1
+ 0000 10                push X
+ 0001 4F                mov X,SP
+ 0002 3806              add SP,6
+ 0004                   .dbline 17
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; // C main line
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; 
+ 0004           ; #include <m8c.h>        // part specific constants and macros
+ 0004           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
+ 0004           ; 
+ 0004           ; void SetOutput(void);
+ 0004           ; void Step(void);
+ 0004           ; 
+ 0004           ; int pos;
+ 0004           ; int enable;
+ 0004           ; int delay;
+ 0004           ; int lstep;
+ 0004           ; 
+ 0004           ; void main(void)
+ 0004           ; {
+ 0004                   .dbline 23
+ 0004           ;       int bstep;
+ 0004           ;       int f, g;
+ 0004           ;       //M8C_EnableIntMask(INT_MSK0, INT_MSK0_GPIO);
+ 0004           ;       //M8C_EnableGInt ; // Uncomment this line to enable Global Interrupts
+ 0004           ;       // Insert your main routine code here.
+ 0004           ;       pos = 0;
+ 0004 550700            mov [_pos+1],0
+ 0007 550600            mov [_pos],0
+ 000A                   .dbline 24
+ 000A           ;       enable = 0;
+ 000A 550500            mov [_enable+1],0
+ 000D 550400            mov [_enable],0
+ 0010                   .dbline 25
+ 0010           ;       delay = 0;
+ 0010 550300            mov [_delay+1],0
+ 0013 550200            mov [_delay],0
+ 0016                   .dbline 26
+ 0016           ;       SetOutput();
+ 0016 90B2              xcall _SetOutput
+ 0018           L2:
+ 0018                   .dbline 28
+ 0018           ;       loop:
+ 0018           ;       bstep = PRT1DR & 1;
+ 0018 5D04              mov A,REG[0x4]
+ 001A 2101              and A,1
+ 001C 5401              mov [X+1],A
+ 001E 560000            mov [X+0],0
+ 0021                   .dbline 29
+ 0021           ;       if(lstep == 0 && bstep == 1) {
+ 0021 3C0000            cmp [_lstep],0
+ 0024 B012              jnz L3
+ 0026 3C0100            cmp [_lstep+1],0
+ 0029 B00D              jnz L3
+ 002B           X1:
+ 002B 3D0000            cmp [X+0],0
+ 002E B008              jnz L3
+ 0030 3D0101            cmp [X+1],1
+ 0033 B003              jnz L3
+ 0035           X2:
+ 0035                   .dbline 30
+ 0035           ;               Step();
+ 0035                   .dbline 30
+ 0035 9036              xcall _Step
+ 0037                   .dbline 31
+ 0037           ;       }
+ 0037           L3:
+ 0037                   .dbline 32
+ 0037           ;       lstep = bstep;
+ 0037 5201              mov A,[X+1]
+ 0039 5301              mov [_lstep+1],A
+ 003B 5200              mov A,[X+0]
+ 003D 5300              mov [_lstep],A
+ 003F                   .dbline 33
+ 003F           ;       if(delay > 0) {
+ 003F 5000              mov A,0
+ 0041 1203              sub A,[_delay+1]
+ 0043 5102              mov A,[_delay]
+ 0045 3180              xor A,-128
+ 0047 5300              mov [__rX],A
+ 0049 5080              mov A,(0 ^ 0x80)
+ 004B 1A00              sbb A,[__rX]
+ 004D DFCA              jnc L2
+ 004F           X3:
+ 004F                   .dbline 34
+ 004F           ;               delay--;
+ 004F                   .dbline 34
+ 004F 7A03              dec [_delay+1]
+ 0051 1E0200            sbb [_delay],0
+ 0054                   .dbline 35
+ 0054           ;               if (delay == 0) {
+ 0054 3C0200            cmp [_delay],0
+ 0057 BFC0              jnz L2
+ 0059 3C0300            cmp [_delay+1],0
+ 005C BFBB              jnz L2
+ 005E           X4:
+ 005E                   .dbline 36
+ 005E           ;                       enable = 0;
+ 005E                   .dbline 36
+ 005E 550500            mov [_enable+1],0
+ 0061 550400            mov [_enable],0
+ 0064                   .dbline 37
+ 0064           ;                       SetOutput();
+ 0064 9064              xcall _SetOutput
+ 0066                   .dbline 38
+ 0066           ;               }
+ 0066                   .dbline 39
+ 0066           ;       }
+ 0066                   .dbline 40
+ 0066           ;       goto loop;
+ 0066 8FB1              xjmp L2
+ 0068           X0:
+ 0068                   .dbline -2
+ 0068           L1:
+ 0068 38FA              add SP,-6
+ 006A 20                pop X
+ 006B                   .dbline 0 ; func end
+ 006B 8FFF              jmp .
+ 006D                   .dbsym l g 4 I
+ 006D                   .dbsym l f 2 I
+ 006D                   .dbsym l bstep 0 I
+ 006D                   .dbend
+ 006D                   .dbfunc e Step _Step fV
+ 006D           ;            dir -> X+0
+ 006D           _Step::
+ 006D                   .dbline -1
+ 006D 10                push X
+ 006E 4F                mov X,SP
+ 006F 3802              add SP,2
+ 0071                   .dbline 43
+ 0071           ; }
+ 0071           ; 
+ 0071           ; void Step(void) {
+ 0071                   .dbline 44
+ 0071           ;       int dir = PRT1DR & 2;
+ 0071 5D04              mov A,REG[0x4]
+ 0073 2102              and A,2
+ 0075 5401              mov [X+1],A
+ 0077 560000            mov [X+0],0
+ 007A                   .dbline 45
+ 007A           ;       if(!dir) {
+ 007A 3D0000            cmp [X+0],0
+ 007D B023              jnz L10
+ 007F 3D0100            cmp [X+1],0
+ 0082 B01E              jnz L10
+ 0084           X5:
+ 0084                   .dbline 46
+ 0084           ;               pos++;
+ 0084                   .dbline 46
+ 0084 7607              inc [_pos+1]
+ 0086 0E0600            adc [_pos],0
+ 0089                   .dbline 47
+ 0089           ;               if (pos > 7) pos = 0;
+ 0089 5007              mov A,7
+ 008B 1207              sub A,[_pos+1]
+ 008D 5106              mov A,[_pos]
+ 008F 3180              xor A,-128
+ 0091 5300              mov [__rX],A
+ 0093 5080              mov A,(0 ^ 0x80)
+ 0095 1A00              sbb A,[__rX]
+ 0097 D020              jnc L11
+ 0099           X6:
+ 0099                   .dbline 47
+ 0099 550700            mov [_pos+1],0
+ 009C 550600            mov [_pos],0
+ 009F                   .dbline 48
+ 009F           ;       } else {
+ 009F 8018              xjmp L11
+ 00A1           L10:
+ 00A1                   .dbline 48
+ 00A1                   .dbline 49
+ 00A1           ;               pos--;
+ 00A1 7A07              dec [_pos+1]
+ 00A3 1E0600            sbb [_pos],0
+ 00A6                   .dbline 50
+ 00A6           ;               if (pos < 0) pos = 7;
+ 00A6 5107              mov A,[_pos+1]
+ 00A8 1100              sub A,0
+ 00AA 5106              mov A,[_pos]
+ 00AC 3180              xor A,-128
+ 00AE 1980              sbb A,(0 ^ 0x80)
+ 00B0 D007              jnc L14
+ 00B2           X7:
+ 00B2                   .dbline 50
+ 00B2 550707            mov [_pos+1],7
+ 00B5 550600            mov [_pos],0
+ 00B8           L14:
+ 00B8                   .dbline 51
+ 00B8           ;       }
+ 00B8           L11:
+ 00B8                   .dbline 52
+ 00B8           ;       enable = 1;
+ 00B8 550501            mov [_enable+1],1
+ 00BB 550400            mov [_enable],0
+ 00BE                   .dbline 53
+ 00BE           ;       delay = 32000;
+ 00BE 550300            mov [_delay+1],0
+ 00C1 55027D            mov [_delay],125
+ 00C4                   .dbline 54
+ 00C4           ;       SetOutput();
+ 00C4 9004              xcall _SetOutput
+ 00C6                   .dbline -2
+ 00C6           L9:
+ 00C6 38FE              add SP,-2
+ 00C8 20                pop X
+ 00C9                   .dbline 0 ; func end
+ 00C9 7F                ret
+ 00CA                   .dbsym l dir 0 I
+ 00CA                   .dbend
+                        .area data(ram, con, rel)
+ 0000                   .dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+ 0000           _stepdata::
+ 0000                   .blkb 2
+                        .area idata(rom,lit)
+ 0000 000A              .word 10
+                        .area data(ram, con, rel)
+ 0002                   .dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+ 0002                   .blkb 2
+                        .area idata(rom,lit)
+ 0002 0008              .word 8
+                        .area data(ram, con, rel)
+ 0004                   .dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+ 0004                   .blkb 2
+                        .area idata(rom,lit)
+ 0004 0009              .word 9
+                        .area data(ram, con, rel)
+ 0006                   .dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+ 0006                   .blkb 2
+                        .area idata(rom,lit)
+ 0006 0001              .word 1
+                        .area data(ram, con, rel)
+ 0008                   .dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+ 0008                   .blkb 2
+                        .area idata(rom,lit)
+ 0008 0005              .word 5
+                        .area data(ram, con, rel)
+ 000A                   .dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+ 000A                   .blkb 2
+                        .area idata(rom,lit)
+ 000A 0004              .word 4
+                        .area data(ram, con, rel)
+ 000C                   .dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+ 000C                   .blkb 2
+                        .area idata(rom,lit)
+ 000C 0006              .word 6
+                        .area data(ram, con, rel)
+ 000E                   .dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+ 000E                   .blkb 2
+                        .area idata(rom,lit)
+ 000E 0002              .word 2
+                        .area data(ram, con, rel)
+ 0010                   .dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+ 0010                   .dbsym e stepdata _stepdata A[16:8]I
+                        .area text(rom, con, rel)
+ 00CA                   .dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+ 00CA                   .dbfunc e SetOutput _SetOutput fV
+ 00CA           ;          value -> X+0
+ 00CA           _SetOutput::
+ 00CA                   .dbline -1
+ 00CA 10                push X
+ 00CB 4F                mov X,SP
+ 00CC 3802              add SP,2
+ 00CE                   .dbline 68
+ 00CE           ; }
+ 00CE           ; 
+ 00CE           ; int stepdata[] = {
+ 00CE           ;       0x0a,
+ 00CE           ;       0x08,
+ 00CE           ;       0x09,
+ 00CE           ;       0x01,
+ 00CE           ;       0x05,
+ 00CE           ;       0x04,
+ 00CE           ;       0x06,
+ 00CE           ;       0x02
+ 00CE           ; };
+ 00CE           ; 
+ 00CE           ; void SetOutput(void) {
+ 00CE                   .dbline 69
+ 00CE           ;       int value = 0;
+ 00CE 560100            mov [X+1],0
+ 00D1 560000            mov [X+0],0
+ 00D4                   .dbline 70
+ 00D4           ;       if (enable) {
+ 00D4 3C0400            cmp [_enable],0
+ 00D7 B006              jnz X8
+ 00D9 3C0500            cmp [_enable+1],0
+ 00DC A011              jz L17
+ 00DE           X8:
+ 00DE                   .dbline 71
+ 00DE           ;               value = stepdata[pos];
+ 00DE                   .dbline 71
+ 00DE 5F0007            mov [__r1],[_pos+1]
+ 00E1 6500              asl [__r1]
+ 00E3 060000            add [__r1],<_stepdata
+ 00E6 3E00              mvi A,[__r1]
+ 00E8 5400              mov [X+0],A
+ 00EA 3E00              mvi A,[__r1]
+ 00EC 5401              mov [X+1],A
+ 00EE                   .dbline 72
+ 00EE           ;       }
+ 00EE           L17:
+ 00EE                   .dbline 73
+ 00EE           ;       PRT0DR = value<<2;
+ 00EE 5201              mov A,[X+1]
+ 00F0 64                asl A
+ 00F1 64                asl A
+ 00F2 6000              mov REG[0],A
+ 00F4                   .dbline -2
+ 00F4           L16:
+ 00F4 38FE              add SP,-2
+ 00F6 20                pop X
+ 00F7                   .dbline 0 ; func end
+ 00F7 7F                ret
+ 00F8                   .dbsym l value 0 I
+ 00F8                   .dbend
+                        .area bss(ram, con, rel)
+ 0000                   .dbfile C:\Users\ADMINI~1\DOCUME~1\PSOCDE~1.4PR\DPMACC~1\Focuser\Focuser\Focuser\main.c
+ 0000           _lstep::
+ 0000                   .blkb 2
+ 0002                   .dbsym e lstep _lstep I
+ 0002           _delay::
+ 0002                   .blkb 2
+ 0004                   .dbsym e delay _delay I
+ 0004           _enable::
+ 0004                   .blkb 2
+ 0006                   .dbsym e enable _enable I
+ 0006           _pos::
+ 0006                   .blkb 2
+ 0008                   .dbsym e pos _pos I
